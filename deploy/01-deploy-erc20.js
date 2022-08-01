@@ -6,10 +6,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const initialSupply = "72883040000000000000000";
-  const setToken = await deploy("SetToken", {
+  const arguments = [
+    "10"
+  ]
+  const myToken = await deploy("CompanyFee", {
     from: deployer,
-    args: [initialSupply],
+    args: arguments,
     log: true,
     waitConfirmations: network.config.bloConfirmations || 1,
   });
@@ -17,8 +19,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     !developmentChain.includes(network.name) &&
     process.env.ETHERSCAN_API_KEY
   ) {
-    await verify(setToken.address, "contracts/SetToken.sol:SetToken", [initialSupply]);
+    await verify(myToken.address, "contracts/CompanyFee.sol:CompanyFee", arguments);
   }
   log("----------------------------------------------------");
 };
-module.exports.tags = ["all", "settoken"];
+module.exports.tags = ["all", "mytoken"];

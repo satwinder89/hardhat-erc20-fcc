@@ -402,8 +402,8 @@
       ]
     },
     "C:\\Users\\satwe\\Documents\\GitHub\\hardhat-erc20-fcc\\contracts\\CompanyFee.sol": {
-      "lastModificationDate": 1659374229290,
-      "contentHash": "c3a541efacdf1f8e0594a2ae7001defb",
+      "lastModificationDate": 1659446465337,
+      "contentHash": "7fc79191e58204d5f930c0553beccc38",
       "sourceName": "contracts/CompanyFee.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -436,7 +436,6 @@
         }
       },
       "imports": [
-        "./SellaToken.sol",
         "@openzeppelin/contracts/utils/math/SafeMath.sol",
         "@openzeppelin/contracts/access/Ownable.sol"
       ],

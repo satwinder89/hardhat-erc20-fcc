@@ -10,7 +10,7 @@ interface SellaTokenInterface {
 
     function balanceOf(address account) external returns (uint256);
 
-    function transfer(address to, uint256 amount) external returns (bool);
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 
 contract CompanyFee is Ownable {
@@ -52,29 +52,54 @@ contract CompanyFee is Ownable {
         return totalSupply;
     }
 
+    function payAgentFee(address agent, uint256 amount) public view returns (uint256) {
+        uint256 agentFee_ = agentFee[agent];
+        uint256 payAgent = SafeMath.div(SafeMath.mul(amount, agentFee_), 100);
+        return payAgent;
+    }
+
+    function payCompanyFee(address company_, uint amount) public view returns (uint256) {
+        uint256 companyFee_ = companyFee[company_];
+        uint256 payCompany = SafeMath.div(
+            SafeMath.mul(amount, companyFee_),
+            100
+        );
+        return payCompany;
+    }
+
+    function payOwnerFee(uint256 amount) public view returns (uint256) {
+        uint256 payOwner = SafeMath.div(SafeMath.mul(amount, _ownerFee), 100);
+        return payOwner;
+    }
+
+    function sendSomeToken(address to, uint256 amount) public returns (bool) {
+        SellaTokenContract.transferFrom(msg.sender, to, amount);
+        return true;
+    }
+
     function pay(address agent, uint256 amount) public returns (bool) {
         uint256 agentFee_ = agentFee[agent];
         address company_ = agentToCompany[agent];
         uint256 companyFee_ = companyFee[company_];
 
         uint256 payAgent = SafeMath.div(SafeMath.mul(amount, agentFee_), 100);
-        SellaTokenContract.transfer(agent, payAgent);
+        SellaTokenContract.transferFrom(msg.sender, agent, payAgent);
 
         uint256 payCompany = SafeMath.div(
             SafeMath.mul(amount, companyFee_),
             100
         );
-        SellaTokenContract.transfer(company_, payCompany);
+        SellaTokenContract.transferFrom(msg.sender, company_, payCompany);
 
 
         uint256 payOwner = SafeMath.div(SafeMath.mul(amount, _ownerFee), 100);
-        SellaTokenContract.transfer(_owner, payOwner);
+        SellaTokenContract.transferFrom(msg.sender, _owner, payOwner);
 
-        uint256 fees = SafeMath.add(payAgent, payOwner);
+        uint256 fees = SafeMath.add(payAgent, payCompany);
         fees = SafeMath.add(fees, payOwner);
         amount = SafeMath.sub(amount, fees);
 
-        SellaTokenContract.transfer(company_, amount);
+        SellaTokenContract.transferFrom(msg.sender, company_, amount);
         return true;
     }
 }

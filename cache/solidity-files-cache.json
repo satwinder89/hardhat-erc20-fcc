@@ -352,58 +352,9 @@
         "Ownable"
       ]
     },
-    "C:\\Users\\satwe\\Documents\\GitHub\\hardhat-erc20-fcc\\contracts\\MyToken.sol": {
-      "lastModificationDate": 1659083273246,
-      "contentHash": "d763fda55c74f95848da53d81041fab0",
-      "sourceName": "contracts/MyToken.sol",
-      "solcConfig": {
-        "version": "0.8.15",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "devdoc",
-                "userdoc",
-                "storageLayout",
-                "evm.gasEstimates"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "metadata": {
-            "useLiteralContent": true
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-        "@openzeppelin/contracts/utils/Context.sol",
-        "@openzeppelin/contracts/utils/math/SafeMath.sol",
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/security/Pausable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "MyToken"
-      ]
-    },
     "C:\\Users\\satwe\\Documents\\GitHub\\hardhat-erc20-fcc\\contracts\\CompanyFee.sol": {
-      "lastModificationDate": 1659446465337,
-      "contentHash": "7fc79191e58204d5f930c0553beccc38",
+      "lastModificationDate": 1659626635166,
+      "contentHash": "e79ab10151c003c3e7daaea179c7aecb",
       "sourceName": "contracts/CompanyFee.sol",
       "solcConfig": {
         "version": "0.8.15",

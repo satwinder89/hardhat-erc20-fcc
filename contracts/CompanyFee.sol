@@ -15,22 +15,23 @@ interface SellaTokenInterface {
 
 contract CompanyFee is Ownable {
     using SafeMath for uint256;
-    address public constant SELLA_CONTRACT =
-        0x1D062a69c7D55b5beA30F8574d885b484E34191E;
-    SellaTokenInterface SellaTokenContract =
-        SellaTokenInterface(SELLA_CONTRACT);
 
     address private _owner;
     uint256 private _ownerFee;
+    address private _tokenAddres;
+    
+    SellaTokenInterface SellaTokenContract =
+        SellaTokenInterface(_tokenAddres);
 
     mapping(address => uint256) public companyFee;
     mapping(address => uint256) public agentFee;
     mapping(address => address) public companyToAgent;
     mapping(address => address) public agentToCompany;
 
-    constructor(uint256 ownerFee_) {
+    constructor(address tokenAddress, uint256 ownerFee_) {
         _owner = msg.sender;
         _ownerFee = ownerFee_;
+        _tokenAddres = tokenAddress;
     }
 
     function addCompanyFee(uint256 fee) public {

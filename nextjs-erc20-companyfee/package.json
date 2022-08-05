@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.2.6",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@web3uikit/core": "^0.1.4",
     "@web3uikit/icons": "^0.1.4",
     "@web3uikit/web3": "^0.1.4",
+    "framer-motion": "^7.0.0",
     "moralis": "^1.8.0",
     "next": "12.1.5",
     "react": "18.0.0",

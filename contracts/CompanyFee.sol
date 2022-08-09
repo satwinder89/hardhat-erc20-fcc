@@ -23,6 +23,19 @@ contract CompanyFee is Ownable {
     SellaTokenInterface SellaTokenContract =
         SellaTokenInterface(_tokenAddres);
 
+    // struct Company {
+    //     string name;
+    //     uint256 fee;
+    // }
+    // Company[] public companies;
+
+    // struct Agent {
+    //     string name;
+    //     uint256 fee;
+    //     mapping(address => address) agentCompany;
+    // }
+    // Agent[] public agents;
+
     mapping(address => uint256) public companyFee;
     mapping(address => uint256) public agentFee;
     mapping(address => address) public companyToAgent;
@@ -34,8 +47,12 @@ contract CompanyFee is Ownable {
         _tokenAddres = tokenAddress;
     }
 
-    function addCompanyFee(uint256 fee) public {
-        companyFee[msg.sender] = fee;
+    function addCompanyFee(address companyAddress_, uint256 companyFee_) public onlyOwner{
+        require(
+            companyAddress_ != address(0),
+            "Company address cannot be the zero address"
+        );
+        companyFee[companyAddress_] = companyFee_;
     }
 
     function addAgentFeeToCompany(address agent, uint256 fee) public {
@@ -48,37 +65,7 @@ contract CompanyFee is Ownable {
         agentToCompany[agent] = msg.sender;
     }
 
-    function totalSellaCoinSupply() public view returns (uint256) {
-        uint256 totalSupply = SellaTokenContract.totalSupply();
-        return totalSupply;
-    }
-
-    function payAgentFee(address agent, uint256 amount) public view returns (uint256) {
-        uint256 agentFee_ = agentFee[agent];
-        uint256 payAgent = SafeMath.div(SafeMath.mul(amount, agentFee_), 100);
-        return payAgent;
-    }
-
-    function payCompanyFee(address company_, uint amount) public view returns (uint256) {
-        uint256 companyFee_ = companyFee[company_];
-        uint256 payCompany = SafeMath.div(
-            SafeMath.mul(amount, companyFee_),
-            100
-        );
-        return payCompany;
-    }
-
-    function payOwnerFee(uint256 amount) public view returns (uint256) {
-        uint256 payOwner = SafeMath.div(SafeMath.mul(amount, _ownerFee), 100);
-        return payOwner;
-    }
-
-    function sendSomeToken(address to, uint256 amount) public returns (bool) {
-        SellaTokenContract.transferFrom(msg.sender, to, amount);
-        return true;
-    }
-
-    function pay(address agent, uint256 amount) public returns (bool) {
+    function splitPayment(address agent, uint256 amount) public returns (bool) {
         uint256 agentFee_ = agentFee[agent];
         address company_ = agentToCompany[agent];
         uint256 companyFee_ = companyFee[company_];
@@ -103,4 +90,24 @@ contract CompanyFee is Ownable {
         SellaTokenContract.transferFrom(msg.sender, company_, amount);
         return true;
     }
+
+    // function payAgentFee(address agent, uint256 amount) public view returns (uint256) {
+    //     uint256 agentFee_ = agentFee[agent];
+    //     uint256 payAgent = SafeMath.div(SafeMath.mul(amount, agentFee_), 100);
+    //     return payAgent;
+    // }
+
+    // function payCompanyFee(address company_, uint amount) public view returns (uint256) {
+    //     uint256 companyFee_ = companyFee[company_];
+    //     uint256 payCompany = SafeMath.div(
+    //         SafeMath.mul(amount, companyFee_),
+    //         100
+    //     );
+    //     return payCompany;
+    // }
+
+    // function payOwnerFee(uint256 amount) public view returns (uint256) {
+    //     uint256 payOwner = SafeMath.div(SafeMath.mul(amount, _ownerFee), 100);
+    //     return payOwner;
+    // }
 }

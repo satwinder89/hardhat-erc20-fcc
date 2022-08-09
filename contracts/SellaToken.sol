@@ -17,7 +17,7 @@ contract SellaToken is ERC20, Ownable, Pausable {
         _owner = msg.sender;
         _mint(msg.sender, initialSupply);
         examplePaggedEuro = initialSupply;
-    }
+    } 
 
     function registerCompany(address wallet, uint256 fee) public {
 

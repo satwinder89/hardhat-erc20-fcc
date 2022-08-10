@@ -19,10 +19,6 @@ contract SellaToken is ERC20, Ownable, Pausable {
         examplePaggedEuro = initialSupply;
     } 
 
-    function registerCompany(address wallet, uint256 fee) public {
-
-    }
-
     function buySellaToken(uint256 euro) public {
         _mint(msg.sender, euro);
         examplePaggedEuro = SafeMath.add(examplePaggedEuro, euro);
@@ -34,19 +30,6 @@ contract SellaToken is ERC20, Ownable, Pausable {
     }
 
     function decimals() public view virtual override returns (uint8) {
-        return 0;
-    }
-
-    function splittedTransfer(address to, uint256 amount)
-        public
-        virtual
-        returns (bool)
-    {
-        address owner = owner();
-        uint256 feeForOwner = SafeMath.div(amount, 5);
-        amount = SafeMath.sub(amount, feeForOwner);
-        transfer(owner, feeForOwner);
-        transfer(to, amount);
-        return true;
+        return 4;
     }
 }

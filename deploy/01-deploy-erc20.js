@@ -8,7 +8,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
   const myToken = await deploy("SellaToken", {
     from: deployer,
-    args: ["10000000"],
+    args: ["10000000000"],
     log: true,
     waitConfirmations: network.config.bloConfirmations || 1,
   });
@@ -25,7 +25,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     !developmentChain.includes(network.name) &&
     process.env.ETHERSCAN_API_KEY
   ) {
-    await verify(myToken.address, "contracts/SellaToken.sol:SellaToken", ["10000000"])
+    await verify(myToken.address, "contracts/SellaToken.sol:SellaToken", ["10000000000"])
     await verify(companyFee.address, "contracts/CompanyFee.sol:CompanyFee", [myToken.address, "10"]);
   }
   log("----------------------------------------------------");

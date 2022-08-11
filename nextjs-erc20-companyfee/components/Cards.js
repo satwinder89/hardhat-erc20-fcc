@@ -1,13 +1,7 @@
-import {
-  Button,
-  TabList,
-  Tab,
-  SvgMessageCircle,
-  SvgBell,
-  SvgPlus,
-} from "web3uikit";
+import { TabList, Tab } from "web3uikit";
 import React from "react";
 import Token from "./Token";
+import Companies from "./Companies";
 
 export default function Cards() {
   return (
@@ -22,7 +16,7 @@ export default function Cards() {
             <Token></Token>
           </Tab>
           <Tab tabKey={2} tabName="Sella Companies">
-            <div>This is Card 2</div>
+            <Companies></Companies>
           </Tab>
           <Tab tabKey={3} tabName="Card 3">
             <div>This is Card 3</div>

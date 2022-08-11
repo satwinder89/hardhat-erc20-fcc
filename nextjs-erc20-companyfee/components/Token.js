@@ -11,12 +11,12 @@ export default function Token() {
   const chainId = parseInt(chainIdHex);
   const tokenAddress = contractAddress["token"][chainId];
   const tokenAbi = JSON.parse(abi["token"]);
+
   const [contractOwner, setContractOwner] = useState(0);
   const [addressBalanceOf, setAddressBalanceOf] = useState(0);
   const [getOwnerBalance, setOwnerBalance] = useState(0);
   const [getBalanceOf, setBalanceOf] = useState(0);
   const [getTotalSupply, setTotalSupply] = useState(0);
-
   const [getTotIncreaseSupply, setTotIncreaseSupply] = useState(0);
   const [getTotDecreaseSupply, setTotDescreaseSupply] = useState(0);
   const [getNewOwner, setNewOwner] = useState("");

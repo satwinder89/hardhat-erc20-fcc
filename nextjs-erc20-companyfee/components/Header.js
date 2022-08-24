@@ -17,7 +17,7 @@ export default function Header() {
               width: "100%",
             }}
           >
-            <ConnectButton moralisAuth={false} />
+            <ConnectButton moralisAuth={true} />
           </div>
         </div>
       </nav>

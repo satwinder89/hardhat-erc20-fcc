@@ -39,6 +39,8 @@ contract CompanyFee is Ownable {
     }
     mapping(address => Company) companies;
 
+    mapping(address => uint256) index;
+
     struct Agent {
         string name;
         uint256 fee;
@@ -62,15 +64,8 @@ contract CompanyFee is Ownable {
         );
 
         companies[companyAddress] = Company(companyName, companyFee, true);
-    }
-
-    modifier onlyCompany() {
-        _checkCompany();
-        _;
-    }
-
-    function _checkCompany() internal view virtual {
-        require(companies[msg.sender].exists, "Company not exist");
+        // companyCount++;
+        // companies[companyAddress].push(Company(companyName, companyFee, true));
     }
 
     function addAgent(
@@ -117,30 +112,6 @@ contract CompanyFee is Ownable {
         return true;
     }
 
-    function getCompanyFee(address companyAddress)
-        public
-        view
-        returns (uint256)
-    {
-        return companies[companyAddress].fee;
-    }
-
-    function getAgentFee(address agentAddress) public view returns (uint256) {
-        return agents[agentAddress].fee;
-    }
-
-    function getContractAddress() public view returns (address) {
-        return address(this);
-    }
-
-    function ownerFee() public view returns (uint256) {
-        return _ownerFee;
-    }
-
-    function getTokenAddress() public view returns (address) {
-        return _tokenAddres;
-    }
-
     function company(address companyAddress)
         public
         view
@@ -153,6 +124,7 @@ contract CompanyFee is Ownable {
         return agents[agentAddress];
     }
 
+    //EXTRA - Functions
     function getCompanyAgents(address companyAddress)
         public
         view
@@ -167,5 +139,38 @@ contract CompanyFee is Ownable {
         returns (address)
     {
         return agentCompany[agentAddress];
+    }
+
+    function getCompanyFee(address companyAddress)
+        public
+        view
+        returns (uint256)
+    {
+        return companies[companyAddress].fee;
+    }
+
+    function getAgentFee(address agentAddress) public view returns (uint256) {
+        return agents[agentAddress].fee;
+    }
+
+    function getTokenAddress() public view returns (address) {
+        return _tokenAddres;
+    }
+
+    function ownerFee() public view returns (uint256) {
+        return _ownerFee;
+    }
+
+    function getContractAddress() public view returns (address) {
+        return address(this);
+    }
+
+    modifier onlyCompany() {
+        _checkCompany();
+        _;
+    }
+
+    function _checkCompany() internal view virtual {
+        require(companies[msg.sender].exists, "Company not exist");
     }
 }

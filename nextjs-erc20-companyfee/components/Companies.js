@@ -3,8 +3,9 @@ import { abi, contractAddress } from "../constants/index";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { Input, Button, Widget, Information } from "web3uikit";
+import { Input, Button, Widget } from "web3uikit";
 import React from "react";
+import BasicTable from "./BasicTable";
 
 export default function Companies() {
   const { chainId: chainIdHex, isWeb3Enabled } = useMoralis();
@@ -54,56 +55,55 @@ export default function Companies() {
     contractAddress: companyContractAddress,
     functionName: "getAgentFee",
     params: {
-      agentAddress: agentAddress1
-    }
-  })
+      agentAddress: agentAddress1,
+    },
+  });
 
   const { runContractFunction: getCompanyFee } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "getCompanyFee",
-    params: { companyAddress: companyAddress1}
-  })
+    params: { companyAddress: companyAddress1 },
+  });
 
   const { runContractFunction: getContractAddress } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "getContractAddress",
-    params: {}
-  })
+    params: {},
+  });
 
   const { runContractFunction: getOwnerFee } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "ownerFee",
-    params: {}
-  })
+    params: {},
+  });
 
   const { runContractFunction: getCompany } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "company",
     params: {
-      companyAddress: companyAddress1
-    }
-  })
+      companyAddress: companyAddress1,
+    },
+  });
 
   const { runContractFunction: getAgent } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "agent",
     params: {
-      agentAddress: agentAddress1
-    }
-  })
+      agentAddress: agentAddress1,
+    },
+  });
 
   const { runContractFunction: getTokenAddress } = useWeb3Contract({
     abi: companyAbi,
     contractAddress: companyContractAddress,
     functionName: "getTokenAddress",
-    params: {}
-  })
-
+    params: {},
+  });
 
   useEffect(() => {
     if (isWeb3Enabled) {
@@ -212,16 +212,16 @@ export default function Companies() {
             <Button
               onClick={async () => {
                 let company = await getCompany();
-                setCompany(company)
+                setCompany(company);
                 setCompanyName(company.name);
                 let cmpFee = company.fee;
-                
+
                 setCompanyFee(cmpFee.toString());
               }}
               text="New Agent"
               theme="primary"
             />
-            Name: {companyName} <br/> 
+            Name: {companyName} <br />
             Fee: {companyFee}
           </Widget>
           <Widget info="Agent" title="Agent">
@@ -236,19 +236,29 @@ export default function Companies() {
             <Button
               onClick={async () => {
                 let agent = await getAgent();
-                setAgent(agent)
+                setAgent(agent);
                 setAgentName(agent.name);
                 let agtFee = agent.fee;
-                
+
                 setAgentFee(agtFee.toString());
               }}
               text="Agent"
               theme="primary"
             />
-            Name: {agentName} <br/> 
+            Name: {agentName} <br />
             Fee: {agentFee}
           </Widget>
-          </section>
+        </section>
+      </div>
+      <div style={{ display: "grid", gap: "20px", padding: "5px 20px" }}>
+        <section style={{ display: "flex", gap: "20px" }}>
+          <Widget>
+            <BasicTable></BasicTable>
+          </Widget>
+          <Widget>
+            <BasicTable></BasicTable>
+          </Widget>
+        </section>
       </div>
     </div>
   );
